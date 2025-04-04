@@ -12,3 +12,25 @@ m=np.argmax(eigenvalues)
 v=eigenvectors[:,m]
 y=v.T@X
 display(y)
+
+
+
+unit_2
+
+
+import sympy as sp
+x0,x1,x2,x3=sp.symbols('x0,x1,x2,x3')
+f=sp.Matrix([[sp.sin(x0+2*x1),2*x1+x3],[2*x0+x2,sp.cos(2*x2+x3)]])
+display(f)
+x=sp.Matrix([[x0,x1],[x2,x3]])
+display(x)
+f0=f[0,0].diff(x)
+display(f0)
+f1=f[0,1].diff(x)
+display(f1)
+f2=f[1,0].diff(x)
+display(f2)
+f3=f[1,1].diff(x)
+display(f3)
+m=sp.Matrix([[[f0],[f1]],[[f2],[f3]]])
+display(m)
