@@ -34,3 +34,84 @@ f3=f[1,1].diff(x)
 display(f3)
 m=sp.Matrix([[[f0],[f1]],[[f2],[f3]]])
 display(m)
+
+
+hessian matrix:
+
+import sympy as sp
+import numpy as np
+x, y = sp.symbols('x y')
+f = x**2 + y**2 - 4*x + 2*y
+fx = sp.Matrix([f.diff(x), f.diff(y)])
+display(fx)
+critical_points = sp.solve([grad_f[0], grad_f[1]], (x, y))
+print(critical_points)
+hessian_f = sp.Matrix([[f.diff(x, x), f.diff(x, y)],
+                       [f.diff(y, x), f.diff(y, y)]])
+display(hessian_f)
+eigenvalues = hessian_f.eigenvals()
+print("Eigenvalues:", eigenvalues)
+if all(val > 0 for val in eigenvalues):
+    print(f"At {point}, the function has a local minimum.")
+elif all(val < 0 for val in eigenvalues):
+    print(f"At {point}, the function has a local maximum.")
+elif any(val > 0 for val in eigenvalues) and any(val < 0 for val in eigenvalues):
+    print(f"At {point}, the function has a saddle point.")
+else:
+    print(f"At {point}, the test is invalid.")
+min_value=f.subs(critical_points)
+print("Minimum value:",min_value)
+
+import sympy as sp
+import numpy as np
+x, y,z = sp.symbols('x y z')
+f = x**2 + y**2 +z**2+x*y+y*z+z*x
+fx = sp.Matrix([f.diff(x), f.diff(y),f.diff(z)])
+display(fx)
+critical_points = sp.solve([fx[0], fx[1], fx[2]], (x, y, z))
+print(critical_points)
+hessian_f = sp.Matrix([[f.diff(x, x), f.diff(x, y), f.diff(x, z)],
+                       [f.diff(y, x), f.diff(y, y), f.diff(y, z)],
+                       [f.diff(z, x), f.diff(z, y), f.diff(z, z)]])
+display(hessian_f)
+eigenvalues = hessian_f.eigenvals()
+print("Eigenvalues:", eigenvalues)
+if all(val > 0 for val in eigenvalues):
+    print(f"At {point}, the function has a local minimum.")
+elif all(val < 0 for val in eigenvalues):
+    print(f"At {point}, the function has a local maximum.")
+elif any(val > 0 for val in eigenvalues) and any(val < 0 for val in eigenvalues):
+    print(f"At {point}, the function has a saddle point.")
+else:
+    print(f"At {point}, the test is invalid.")
+min_value=f.subs(critical_points)
+print("Minimum value:",min_value)
+
+shortest descent method :
+
+import sympy as sp
+x,y=sp.symbols('x y')
+f=x-y+2*x**2+2*x*y+y**2
+x1 = sp.Matrix([0, 0])
+grad_f = sp.Matrix([f.diff(x), f.diff(y)])
+display(grad_f)
+h = sp.Matrix([[f.diff(x, x), f.diff(x, y)],
+               [f.diff(y, x), f.diff(y, y)]])
+display(h)
+s1 = -(grad_f.subs({x: 0, y: 0}))
+display(s1)
+a= (s1.T * s1)[0]
+b= (s1.T * h * s1)[0]
+l = (a/ b)
+display(l)
+x2 = x1 + l * s1
+display(x2)
+max_iterations = 10
+iteration=0
+alpha = 0.1
+while iteration < max_iterations:
+    iteration += 1
+    g = grad_f.subs({x: x1[0], y: x1[1]})
+    x1 = x1 - alpha * g
+    print(f"Iteration {iteration}: x1 = {x1}, Gradient = {g}")
+print(f"Final point: {x1}")
