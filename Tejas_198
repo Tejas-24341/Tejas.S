@@ -115,3 +115,89 @@ while iteration < max_iterations:
     x1 = x1 - alpha * g
     print(f"Iteration {iteration}: x1 = {x1}, Gradient = {g}")
 print(f"Final point: {x1}")
+
+
+10.)
+
+from sympy import symbols, simplify
+x = symbols('x')
+f = x**2 - 2.6*x + 2
+a, b = -2, 3
+n = 6
+F = [1, 1, 2, 3, 5, 8, 13]
+for k in range(1, n + 1):
+    l_k = (F[n - k] / F[n - k + 1]) * (b - a)
+    x1=b-l_k
+    x2=a+l_k
+    f_x1=f.subs({x:x1})
+    f_x2=f.subs({x:x2})
+    print(f"Iteration {k}:")
+    print(f"  lk = {l_k}")
+    print(f"  x1 = {x1}")
+    print(f"  x2 = {x2}")
+    print(f"  f(x1) = {f_x1}")
+    print(f"  f(x2) = {f_x2}")
+    print(f"  New interval: [{a}, {b}]\n")
+    if f_x1 > f_x2:
+        a = x1
+    else:
+        b = x2
+x_min = (a + b) / 2
+f_min = f.subs(x, x_min)
+print("X value:",x_min)
+print("Minimum value:",f_min)
+
+OUTPUT:
+
+Iteration 1:
+  lk = 3.076923076923077
+  x1 = -0.0769230769230771
+  x2 = 1.076923076923077
+  f(x1) = 2.20591715976331
+  f(x2) = 0.359763313609467
+  New interval: [-2, 3]
+
+Iteration 2:
+  lk = 1.9230769230769231
+  x1 = 1.0769230769230769
+  x2 = 1.846153846153846
+  f(x1) = 0.359763313609467
+  f(x2) = 0.608284023668639
+  New interval: [-0.0769230769230771, 3]
+
+Iteration 3:
+  lk = 1.1538461538461537
+  x1 = 0.6923076923076923
+  x2 = 1.0769230769230766
+  f(x1) = 0.679289940828402
+  f(x2) = 0.359763313609468
+  New interval: [-0.0769230769230771, 1.846153846153846]
+
+Iteration 4:
+  lk = 0.7692307692307692
+  x1 = 1.0769230769230769
+  x2 = 1.4615384615384615
+  f(x1) = 0.359763313609467
+  f(x2) = 0.336094674556213
+  New interval: [0.6923076923076923, 1.846153846153846]
+
+Iteration 5:
+  lk = 0.3846153846153846
+  x1 = 1.4615384615384615
+  x2 = 1.4615384615384615
+  f(x1) = 0.336094674556213
+  f(x2) = 0.336094674556213
+  New interval: [1.0769230769230769, 1.846153846153846]
+
+Iteration 6:
+  lk = 0.3846153846153846
+  x1 = 1.0769230769230769
+  x2 = 1.4615384615384615
+  f(x1) = 0.359763313609467
+  f(x2) = 0.336094674556213
+  New interval: [1.0769230769230769, 1.4615384615384615]
+
+X value: 1.2692307692307692
+Minimum value: 0.310946745562130
+1
+​
